@@ -23,8 +23,7 @@ public class AuthService {
     }
 
     public String getUrlAutenticacao() {
-        return (HUBSPOT_URL
-                .concat("?client_id=%s&redirect_uri=%s&scope=%s")
+        return (HUBSPOT_URL.concat("?client_id=%s&redirect_uri=%s&scope=%s")
                 .formatted(properties.getClientId(), properties.getRedirectUri(), properties.getScope()));
     }
 

@@ -22,4 +22,8 @@ public class ContactService {
 
         return mapper.toDto(integration.createContact(request));
     }
+
+    public void handleNotification() {
+        // Lógica para salvar em um banco a informação ou entregar a outra aplicação
+    }
 }
