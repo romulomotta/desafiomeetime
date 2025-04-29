@@ -1,0 +1,6 @@
+package com.lobato.desafiomeetime.entrypoint.dto;
+
+import java.util.List;
+
+public record ContactNotificationRequestDto(List<NotificationMetadata> notificationData) {
+}
