@@ -1,9 +1,9 @@
-package com.lobato.desafiomeetime.repository.Integration;
+package com.lobato.desafiomeetime.config.token;
 
 import com.lobato.desafiomeetime.application.AuthMapper;
-import com.lobato.desafiomeetime.application.domain.AccessTokenDomain;
+import com.lobato.desafiomeetime.application.domain.TokenRequestDomain;
+import com.lobato.desafiomeetime.application.domain.TokenResponseDomain;
 import com.lobato.desafiomeetime.config.properties.HubSpotProperties;
-import com.lobato.desafiomeetime.repository.client.AuthClient;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,24 +15,24 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClientException;
 
 @Service
-public class AuthIntegration {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthIntegration.class);
+public class TokenIntegration {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TokenIntegration.class);
 
-    private final AuthClient client;
+    private final TokenClient client;
     private final HubSpotProperties properties;
     private final AuthMapper mapper;
 
-    public AuthIntegration(AuthClient client,
-                           HubSpotProperties properties,
-                           AuthMapper mapper) {
+    public TokenIntegration(TokenClient client,
+                            HubSpotProperties properties,
+                            AuthMapper mapper) {
         this.client = client;
         this.properties = properties;
         this.mapper = mapper;
     }
 
-    public AccessTokenDomain getToken(String code) {
+    public TokenResponseDomain getToken(TokenRequestDomain domain) {
         try {
-            return mapper.toDomain(client.getAccessToken(createBody(code)));
+            return mapper.toDomain(client.getAccessToken(createBody(domain)));
         } catch (FeignException.FeignClientException ex) {
             LOGGER.error("Erro 4xx, ao buscar Token Access. %s".formatted(ex.contentUTF8()));
             throw new RestClientException("Erro de cliente na API de Token", ex);
@@ -42,14 +42,15 @@ public class AuthIntegration {
         }
     }
 
-    private MultiValueMap<String, String> createBody(String code) {
+    private MultiValueMap<String, String> createBody(TokenRequestDomain domain) {
+        String nameParam = domain.isRefresh() ? "refresh_token" : "code";
 
         MultiValueMap<String, String> request = new LinkedMultiValueMap<>();
         request.add("grant_type", properties.getGrantType());
         request.add("client_id", properties.getClientId());
         request.add("client_secret", properties.getSecret());
         request.add("redirect_uri", properties.getRedirectUri());
-        request.add("code", code);
+        request.add(nameParam, domain.accessCode());
 
         return request;
     }

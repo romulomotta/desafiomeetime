@@ -1,7 +1,8 @@
 package com.lobato.desafiomeetime.entrypoint.controller;
 
+import com.lobato.desafiomeetime.application.AuthMapper;
 import com.lobato.desafiomeetime.application.service.AuthService;
-import com.lobato.desafiomeetime.entrypoint.dto.AccessTokenDto;
+import com.lobato.desafiomeetime.entrypoint.dto.TokenResponseDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,11 @@ import java.net.URI;
 public class AuthController {
 
     private final AuthService service;
+    private final AuthMapper mapper;
 
-    public AuthController(AuthService service) {
+    public AuthController(AuthService service, AuthMapper mapper) {
         this.service = service;
+        this.mapper = mapper;
     }
 
     @GetMapping
@@ -32,8 +35,8 @@ public class AuthController {
     }
 
     @GetMapping("auth-callback")
-    public ResponseEntity<AccessTokenDto> getToken(@RequestParam("code") String code) {
-        AccessTokenDto result = service.getToken(code);
+    public ResponseEntity<TokenResponseDto> getToken(@RequestParam("code") String code) {
+        TokenResponseDto result = service.getAccessToken(mapper.toRequestTokenDomain(code, false));
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 }

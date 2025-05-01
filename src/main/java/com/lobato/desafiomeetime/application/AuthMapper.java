@@ -1,14 +1,19 @@
 package com.lobato.desafiomeetime.application;
 
-import com.lobato.desafiomeetime.application.domain.AccessTokenDomain;
-import com.lobato.desafiomeetime.entrypoint.dto.AccessTokenDto;
-import com.lobato.desafiomeetime.repository.entity.TokenResponseEntity;
+import com.lobato.desafiomeetime.application.domain.TokenRequestDomain;
+import com.lobato.desafiomeetime.application.domain.TokenResponseDomain;
+import com.lobato.desafiomeetime.config.token.TokenResponseEntity;
+import com.lobato.desafiomeetime.entrypoint.dto.TokenResponseDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface AuthMapper {
 
-    AccessTokenDomain toDomain(TokenResponseEntity entity);
+    TokenResponseDomain toDomain(TokenResponseEntity entity);
 
-    AccessTokenDto toDto(AccessTokenDomain domain);
+    TokenResponseDto toDto(TokenResponseDomain domain);
+
+    @Mapping(target = "accessCode", source = "code")
+    TokenRequestDomain toRequestTokenDomain(String code, boolean isRefresh);
 }

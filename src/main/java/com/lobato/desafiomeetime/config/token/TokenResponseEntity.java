@@ -1,4 +1,4 @@
-package com.lobato.desafiomeetime.repository.entity;
+package com.lobato.desafiomeetime.config.token;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
