@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("contatos")
 public class ContactController {
@@ -33,11 +35,11 @@ public class ContactController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PostMapping("notificar-novocontato")
+    @PostMapping("notificar-novo")
     public ResponseEntity<Void> notificationNewContact(@RequestHeader("X-HubSpot-Signature") String sign,
-                                                       @RequestBody ContactNotificationRequestDto request) {
+                                                       @RequestBody List<ContactNotificationRequestDto> request) {
 
-        service.handleNotification();
+        service.handleNotification(request);
         return ResponseEntity.ok().build();
     }
 }

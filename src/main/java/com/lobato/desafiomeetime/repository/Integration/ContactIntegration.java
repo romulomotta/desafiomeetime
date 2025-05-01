@@ -3,7 +3,6 @@ package com.lobato.desafiomeetime.repository.Integration;
 import com.lobato.desafiomeetime.application.ContactMapper;
 import com.lobato.desafiomeetime.application.domain.ContactRequestDomain;
 import com.lobato.desafiomeetime.repository.client.ContactClient;
-import com.lobato.desafiomeetime.repository.entity.ContactRequestEntity;
 import com.lobato.desafiomeetime.repository.entity.ContactResponseEntity;
 import feign.FeignException;
 import org.slf4j.Logger;
@@ -19,9 +18,6 @@ import org.springframework.web.client.RestClientException;
 public class ContactIntegration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContactIntegration.class);
-    private static final String HUBSPOT_CATEGORY = "HUBSPOT_DEFINED";
-    private static final Integer HUBSPOT_TYPE_ID = 1;
-
     private final ContactMapper mapper;
     private final ContactClient client;
 
@@ -32,7 +28,7 @@ public class ContactIntegration {
 
     public ContactResponseEntity createContact(ContactRequestDomain domain) {
         try {
-            return client.createContact(createHeaders(domain.token()), createRequest(domain));
+            return client.createContact(createHeaders(domain.token()), mapper.toEntity(domain));
         } catch (FeignException.FeignClientException ex) {
             LOGGER.error("Erro 4xx, ao buscar Token Access. %s".formatted(ex.contentUTF8()));
             throw new RestClientException("Erro de cliente na API de Token", ex);
@@ -42,20 +38,11 @@ public class ContactIntegration {
         }
     }
 
-
     private HttpHeaders createHeaders(String token) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
         headers.add(HttpHeaders.AUTHORIZATION, "Bearer %s".formatted(token));
 
         return headers;
-    }
-
-    private ContactRequestEntity createRequest(ContactRequestDomain domain) {
-
-        return mapper.toEntity(
-                domain,
-                HUBSPOT_CATEGORY,
-                HUBSPOT_TYPE_ID);
     }
 }

@@ -4,6 +4,5 @@ public record ContactRequestDomain(String token,
                                    String refreshToken,
                                    String email,
                                    String lastname,
-                                   String firstname,
-                                   String associateId) {
+                                   String firstname) {
 }

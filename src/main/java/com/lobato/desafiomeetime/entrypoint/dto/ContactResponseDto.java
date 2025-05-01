@@ -1,5 +1,8 @@
 package com.lobato.desafiomeetime.entrypoint.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public record ContactResponseDto(String createdAt,
                                  Boolean archived,
                                  String archivedAt,
