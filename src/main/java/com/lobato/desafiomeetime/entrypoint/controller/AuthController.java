@@ -1,6 +1,6 @@
 package com.lobato.desafiomeetime.entrypoint.controller;
 
-import com.lobato.desafiomeetime.application.AuthMapper;
+import com.lobato.desafiomeetime.application.TokenMapper;
 import com.lobato.desafiomeetime.application.service.AuthService;
 import com.lobato.desafiomeetime.entrypoint.dto.TokenResponseDto;
 import org.springframework.http.HttpHeaders;
@@ -18,9 +18,9 @@ import java.net.URI;
 public class AuthController {
 
     private final AuthService service;
-    private final AuthMapper mapper;
+    private final TokenMapper mapper;
 
-    public AuthController(AuthService service, AuthMapper mapper) {
+    public AuthController(AuthService service, TokenMapper mapper) {
         this.service = service;
         this.mapper = mapper;
     }

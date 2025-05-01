@@ -1,6 +1,6 @@
 package com.lobato.desafiomeetime.config.token;
 
-import com.lobato.desafiomeetime.application.AuthMapper;
+import com.lobato.desafiomeetime.application.TokenMapper;
 import com.lobato.desafiomeetime.application.domain.TokenRequestDomain;
 import com.lobato.desafiomeetime.application.domain.TokenResponseDomain;
 import com.lobato.desafiomeetime.config.properties.HubSpotProperties;
@@ -20,11 +20,11 @@ public class TokenIntegration {
 
     private final TokenClient client;
     private final HubSpotProperties properties;
-    private final AuthMapper mapper;
+    private final TokenMapper mapper;
 
     public TokenIntegration(TokenClient client,
                             HubSpotProperties properties,
-                            AuthMapper mapper) {
+                            TokenMapper mapper) {
         this.client = client;
         this.properties = properties;
         this.mapper = mapper;
@@ -42,7 +42,7 @@ public class TokenIntegration {
         }
     }
 
-    private MultiValueMap<String, String> createBody(TokenRequestDomain domain) {
+    public MultiValueMap<String, String> createBody(TokenRequestDomain domain) {
         String nameParam = domain.isRefresh() ? "refresh_token" : "code";
 
         MultiValueMap<String, String> request = new LinkedMultiValueMap<>();

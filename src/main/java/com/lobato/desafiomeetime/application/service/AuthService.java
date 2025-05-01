@@ -1,6 +1,6 @@
 package com.lobato.desafiomeetime.application.service;
 
-import com.lobato.desafiomeetime.application.AuthMapper;
+import com.lobato.desafiomeetime.application.TokenMapper;
 import com.lobato.desafiomeetime.application.domain.TokenRequestDomain;
 import com.lobato.desafiomeetime.config.properties.HubSpotProperties;
 import com.lobato.desafiomeetime.config.token.TokenIntegration;
@@ -13,11 +13,11 @@ public class AuthService {
     private static final String HUBSPOT_URL = "https://app.hubspot.com/oauth/authorize";
     private final HubSpotProperties properties;
     private final TokenIntegration integration;
-    private final AuthMapper mapper;
+    private final TokenMapper mapper;
 
     public AuthService(HubSpotProperties properties,
                        TokenIntegration integration,
-                       AuthMapper mapper) {
+                       TokenMapper mapper) {
         this.properties = properties;
         this.integration = integration;
         this.mapper = mapper;
