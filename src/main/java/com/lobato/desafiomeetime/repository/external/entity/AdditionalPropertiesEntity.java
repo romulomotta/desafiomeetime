@@ -1,4 +1,4 @@
-package com.lobato.desafiomeetime.repository.entity;
+package com.lobato.desafiomeetime.repository.external.entity;
 
 public record AdditionalPropertiesEntity(String sourceId,
                                          String sourceType,
