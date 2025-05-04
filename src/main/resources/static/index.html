@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Validador</title>
+    <style>
+        button {
+          margin: 10px;
+          padding: 10px;
+        }
+        #toast {
+          visibility: hidden;
+          min-width: 200px;
+          background-color: #333;
+          color: #fff;
+          text-align: center;
+          padding: 12px;
+          border-radius: 4px;
+          position: fixed;
+          bottom: 30px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 1;
+        }
+        #toast.show {
+          visibility: visible;
+          animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        @keyframes fadein {
+          from {
+            bottom: 0;
+            opacity: 0;
+          }
+          to {
+            bottom: 30px;
+            opacity: 1;
+          }
+        }
+        @keyframes fadeout {
+          from {
+            bottom: 30px;
+            opacity: 1;
+          }
+          to {
+            bottom: 0;
+            opacity: 0;
+          }
+        }
+    </style>
+</head>
+<body>
+<button onclick="startAuth()">Autenticar</button>
+<button onclick="createContact()">Criar Contato</button>
+
+<div id="toast"></div>
+
+<script>
+    const baseURL = "http://localhost:8080";
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.className = "show";
+      setTimeout(() => {
+        toast.className = toast.className.replace("show", "");
+      }, 3000);
+    }
+
+    function startAuth() {
+      window.location.href = `${baseURL}/autenticar`;
+    }
+
+    function createContact() {
+      fetch(`${baseURL}/contatos/criar`, { method: "POST" })
+        .then(() => showToast("Contato criado! Aguarde confirmação..."))
+        .catch(() => showToast("Erro ao criar contato"));
+    }
+
+    // Simula um "webhook" chegando do servidor com SSE (Server-Sent Events)
+    const eventSource = new EventSource(`${baseURL}/webhook-stream`);
+    eventSource.onmessage = function (event) {
+      const data = JSON.parse(event.data);
+      showToast(`${data.nome} foi adicionado!`);
+    };
+</script>
+</body>
+</html>
