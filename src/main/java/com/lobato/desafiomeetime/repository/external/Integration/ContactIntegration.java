@@ -1,12 +1,12 @@
-package com.lobato.desafiomeetime.repository.Integration;
+package com.lobato.desafiomeetime.repository.external.Integration;
 
 import com.lobato.desafiomeetime.application.ContactMapper;
 import com.lobato.desafiomeetime.application.TokenMapper;
 import com.lobato.desafiomeetime.application.domain.ContactRequestDomain;
 import com.lobato.desafiomeetime.application.domain.TokenResponseDomain;
 import com.lobato.desafiomeetime.config.token.TokenIntegration;
-import com.lobato.desafiomeetime.repository.client.ContactClient;
-import com.lobato.desafiomeetime.repository.entity.ContactResponseEntity;
+import com.lobato.desafiomeetime.repository.external.client.ContactClient;
+import com.lobato.desafiomeetime.repository.external.entity.ContactResponseEntity;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

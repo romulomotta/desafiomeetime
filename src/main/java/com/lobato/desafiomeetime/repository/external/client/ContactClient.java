@@ -1,7 +1,7 @@
-package com.lobato.desafiomeetime.repository.client;
+package com.lobato.desafiomeetime.repository.external.client;
 
-import com.lobato.desafiomeetime.repository.entity.ContactRequestEntity;
-import com.lobato.desafiomeetime.repository.entity.ContactResponseEntity;
+import com.lobato.desafiomeetime.repository.external.entity.ContactRequestEntity;
+import com.lobato.desafiomeetime.repository.external.entity.ContactResponseEntity;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

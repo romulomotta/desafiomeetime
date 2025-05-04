@@ -1,4 +1,4 @@
-package com.lobato.desafiomeetime.repository.entity;
+package com.lobato.desafiomeetime.repository.external.entity;
 
 public record ContactResponseEntity(String createdAt,
                                     Boolean archived,
