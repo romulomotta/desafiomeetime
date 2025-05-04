@@ -27,6 +27,7 @@ public class ContactIntegration {
     private final TokenMapper tokenMapper;
     private final ContactClient client;
     private final TokenIntegration tokenIntegration;
+    private boolean isRetryng;
 
     public ContactIntegration(ContactMapper mapper, TokenMapper tokenMapper, ContactClient client, TokenIntegration tokenIntegration) {
         this.mapper = mapper;
@@ -35,14 +36,17 @@ public class ContactIntegration {
         this.tokenIntegration = tokenIntegration;
     }
 
+
     @Retryable(include = {FeignException.TooManyRequests.class},
-            maxAttempts = 2, backoff = @Backoff(delay = 11000))
+            maxAttempts = 2,
+            backoff = @Backoff(delay = 11000))
     public ContactResponseEntity createContact(ContactRequestDomain domain) {
         try {
             return client.createContact(createHeaderWithBearer(domain.token()), mapper.toEntity(domain));
         } catch (FeignException.FeignClientException ex) {
-            if (ex.status() == HttpStatus.UNAUTHORIZED.value()) {
-                retryWithUpdatedToken(domain, updateToken(domain));
+            if (ex.status() == HttpStatus.UNAUTHORIZED.value() && !isRetryng) {
+                isRetryng = true;
+                return retryWithUpdatedToken(domain, updateToken(domain));
             }
             LOGGER.error("Erro 4xx, ao buscar Token Access. %s".formatted(ex.contentUTF8()));
             throw new RestClientException("Erro de cliente na API de Token", ex);
@@ -52,11 +56,11 @@ public class ContactIntegration {
         }
     }
 
-    private void retryWithUpdatedToken(ContactRequestDomain requestDomain, TokenResponseDomain responseDomain) {
+    private ContactResponseEntity retryWithUpdatedToken(ContactRequestDomain requestDomain, TokenResponseDomain responseDomain) {
         ContactRequestDomain updatedRequest = new ContactRequestDomain(
                 responseDomain.accessToken(), responseDomain.refreshToken(),
                 requestDomain.email(), requestDomain.lastname(), requestDomain.firstname());
-        createContact(updatedRequest);
+        return createContact(updatedRequest);
     }
 
     private TokenResponseDomain updateToken(ContactRequestDomain domain) {

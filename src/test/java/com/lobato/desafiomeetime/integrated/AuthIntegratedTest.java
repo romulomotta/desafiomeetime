@@ -1,4 +1,4 @@
-package com.lobato.desafiomeetime.integration;
+package com.lobato.desafiomeetime.integrated;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.lobato.desafiomeetime.ApplicationTests;
@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-public class TokenIntegrationTest extends ApplicationTests {
+public class AuthIntegratedTest extends ApplicationTests {
 
     private static final String URL_REDIRECT = "https://app.hubspot.com/oauth/authorize?client_id=%s&redirect_uri=%s&scope=%s";
     @Autowired

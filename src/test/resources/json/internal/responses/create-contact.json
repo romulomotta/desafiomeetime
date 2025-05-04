@@ -1,0 +1,14 @@
+{
+  "createdAt": "2025-05-01T01:30:56.961Z",
+  "archived": false,
+  "archivedAt": null,
+  "propertiesWithHistory": null,
+  "id": "118396252743",
+  "objectWriteTraceId": null,
+  "properties": {
+    "email": "joseph@teste.com",
+    "lastname": "X.",
+    "firstname": "joseph"
+  },
+  "updatedAt": "2025-05-01T01:30:56.961Z"
+}
