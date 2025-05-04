@@ -134,4 +134,5 @@ O HubSpot enviará uma mensagem via Webhook para poder confirmar a criação de 
 - Cache: Estou acostumado a cachear toda chamada de token. Como é uma aplicação de teste,  
 acabei não utilizando. Apenas aproveitei o refresh token. No entanto, por precisar aproveitar o refresh,  se tornaria necessário eu pensar um pouco a mais em como seria a estratégia do cache.
 - Validação API HubSpot: Vi na documentação que existe como validar se o envio foi feito pelo HubSpot,  mas pelo contexto do desafio, somado ao tempo que levaria para entender como fazer, acabou não se provando tão necessário.
+- Swagger: Acabei de lembrar do swagger para a documentação. Estou há um tempo sem usar no dia a dia, acabou escapando do meu fluxo de desenvolvimento.
 
