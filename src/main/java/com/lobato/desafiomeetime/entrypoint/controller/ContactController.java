@@ -5,6 +5,7 @@ import com.lobato.desafiomeetime.application.service.ContactService;
 import com.lobato.desafiomeetime.entrypoint.dto.ContactNotificationRequestDto;
 import com.lobato.desafiomeetime.entrypoint.dto.ContactRequestDto;
 import com.lobato.desafiomeetime.entrypoint.dto.ContactResponseDto;
+import com.lobato.desafiomeetime.entrypoint.dto.SavedContactResponseDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,14 @@ public class ContactController {
     @PostMapping("notificar-novo")
     public ResponseEntity<Void> notificationNewContact(@RequestHeader("X-HubSpot-Signature") String sign,
                                                        @RequestBody List<ContactNotificationRequestDto> request) {
-
-        service.handleNotification(request);
+        service.handleContactNotification(request);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/id-salvo")
+    public ResponseEntity<List<SavedContactResponseDto>> buscarIdSalvosWebHook() {
+
+        var result = service.fetchWebhooksSavedIds();
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
