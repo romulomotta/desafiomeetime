@@ -55,7 +55,7 @@
 <div id="toast"></div>
 
 <script>
-    const baseURL = "http://localhost:8080";
+    const baseURL = "https://desafiomeetime.onrender.com";
 
     function showToast(message) {
       const toast = document.getElementById("toast");
@@ -75,13 +75,6 @@
         .then(() => showToast("Contato criado! Aguarde confirmação..."))
         .catch(() => showToast("Erro ao criar contato"));
     }
-
-    // Simula um "webhook" chegando do servidor com SSE (Server-Sent Events)
-    const eventSource = new EventSource(`${baseURL}/webhook-stream`);
-    eventSource.onmessage = function (event) {
-      const data = JSON.parse(event.data);
-      showToast(`${data.nome} foi adicionado!`);
-    };
 </script>
 </body>
 </html>
