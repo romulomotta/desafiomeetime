@@ -13,10 +13,6 @@ public class ContactEntity {
     private Long id;
     private BigInteger objectId;
 
-    public ContactEntity(BigInteger objectId) {
-        this.objectId = objectId;
-    }
-
     public ContactEntity() {
     }
 

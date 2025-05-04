@@ -24,7 +24,6 @@ public class ContactService {
     private final ContactRepository repository;
 
     public ContactService(ContactIntegration integration,
-                          AuthService authService,
                           ContactMapper mapper,
                           ContactRepository repository) {
         this.integration = integration;
@@ -60,9 +59,7 @@ public class ContactService {
         List<SavedContactResponseDto> webhookSavedContacts = new ArrayList<>();
 
         var result = repository.findAll();
-        result.forEach(contact -> {
-            webhookSavedContacts.add(mapper.toWebhookContactDto(contact));
-        });
+        result.forEach(contact -> webhookSavedContacts.add(mapper.toWebhookContactDto(contact)));
 
         return webhookSavedContacts;
     }
