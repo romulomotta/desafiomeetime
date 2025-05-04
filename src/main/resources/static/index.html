@@ -55,8 +55,6 @@
 <div id="toast"></div>
 
 <script>
-    const baseURL = "https://desafiomeetime.onrender.com";
-
     function showToast(message) {
       const toast = document.getElementById("toast");
       toast.textContent = message;
@@ -67,11 +65,11 @@
     }
 
     function startAuth() {
-      window.location.href = `${baseURL}/autenticar`;
+      window.location.href = `https://app.hubspot.com/oauth/authorize?client_id=4e0adbd6-18fb-4534-8081-bea85585bb43&redirect_uri=https://desafiomeetime.onrender.com/autenticar/auth-callback&scope=crm.objects.contacts.write%20crm.schemas.contacts.write%20oauth%20crm.objects.contacts.read`;
     }
 
     function createContact() {
-      fetch(`${baseURL}/contatos/criar`, { method: "POST" })
+      fetch(`https://desafiomeetime.onrender.com/contatos/criar`, { method: "POST" })
         .then(() => showToast("Contato criado! Aguarde confirmação..."))
         .catch(() => showToast("Erro ao criar contato"));
     }
