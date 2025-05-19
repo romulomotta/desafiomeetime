@@ -18,7 +18,7 @@ Um desenho simplificado do fluxo idealizado das jornadas.
 ![meetime_jornada_contato](https://github.com/user-attachments/assets/7363d376-e7be-41bc-9cb4-a8bfd03a5d45)
 
 ## Instruções:
-### Projeto Hospedado no Render
+### Projeto Hospedado no Render (Desabilitado, somente local)
 
 O projeto está hospedado sob o endereço:
 https://desafiomeetime.onrender.com
